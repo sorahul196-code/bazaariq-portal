@@ -1,0 +1,791 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"/>
+<title>BazaarIQ — Cyber Cafe Partner</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Noto+Sans+Devanagari:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
+:root{
+  --bg:#0D0D0D;--surface:#161616;--surface2:#1F1F1F;
+  --border:rgba(255,255,255,0.08);
+  --orange:#FF6B1A;--orange-dim:rgba(255,107,26,0.12);
+  --green:#22C55E;--green-dim:rgba(34,197,94,0.12);
+  --text:#F5F5F5;--muted:rgba(245,245,245,0.45);
+  --font:'Plus Jakarta Sans',sans-serif;
+  --font-deva:'Noto Sans Devanagari','Plus Jakarta Sans',sans-serif;
+}
+html,body{height:100%;background:var(--bg);color:var(--text);font-family:var(--font);overflow-x:hidden;}
+body::before{
+  content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
+  background-image:radial-gradient(circle,rgba(255,255,255,0.06) 1px,transparent 1px);
+  background-size:28px 28px;
+}
+
+/* ═══════════════════════════════════════
+   LANGUAGE SCREEN
+═══════════════════════════════════════ */
+#lang-screen{
+  position:fixed;inset:0;z-index:100;background:var(--bg);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  padding:32px 24px;
+  transition:opacity 0.38s ease,transform 0.38s cubic-bezier(.4,0,.2,1);
+}
+#lang-screen.hide{opacity:0;transform:scale(0.96);pointer-events:none;}
+
+
+.logo-svg-slot{
+  width:170px;height:auto;
+  display:flex;align-items:center;justify-content:center;
+  margin-bottom:36px;
+}
+.logo-svg-slot svg,.logo-svg-slot img{width:100%;height:auto;display:block;}
+
+.lang-heading{
+  font-size:19px;font-weight:800;letter-spacing:-0.02em;
+  color:var(--text);text-align:center;margin-bottom:6px;
+}
+.lang-sub{
+  font-size:13px;color:var(--muted);text-align:center;
+  line-height:1.6;margin-bottom:28px;font-family:var(--font-deva);
+}
+.lang-grid{display:flex;flex-direction:column;gap:10px;width:100%;max-width:340px;}
+.lang-btn{
+  display:flex;align-items:center;gap:16px;
+  background:var(--surface);border:1px solid var(--border);
+  border-radius:16px;padding:16px 18px;cursor:pointer;width:100%;text-align:left;
+  transition:border-color 0.2s,transform 0.18s cubic-bezier(.22,.68,0,1.2),background 0.2s;
+}
+.lang-btn:hover{border-color:rgba(255,107,26,0.45);background:rgba(255,107,26,0.05);}
+.lang-btn:active{transform:scale(0.97);}
+.lang-flag{
+  width:42px;height:42px;border-radius:11px;
+  background:rgba(255,255,255,0.05);
+  display:flex;align-items:center;justify-content:center;
+  font-size:22px;flex-shrink:0;
+}
+.lang-name{font-size:16px;font-weight:700;letter-spacing:-0.01em;color:var(--text);}
+.lang-native{font-size:12px;color:var(--muted);margin-top:2px;font-family:var(--font-deva);}
+.lang-arrow{margin-left:auto;font-size:14px;color:var(--muted);}
+
+
+#main-page{display:none;}
+#main-page.visible{display:block;}
+.wrap{position:relative;z-index:1;max-width:430px;margin:0 auto;padding:0 20px 60px;}
+
+/* HEADER */
+.header{display:flex;align-items:center;justify-content:space-between;padding:20px 0 28px;}
+.logo-area{display:flex;align-items:center;gap:10px;}
+
+.header-logo-slot{
+  width:38px;height:38px;border-radius:11px;
+  overflow:hidden;flex-shrink:0;
+  background:var(--bg);
+  display:flex;align-items:center;justify-content:center;
+}
+.header-logo-slot svg,.header-logo-slot img{width:100%;height:100%;object-fit:contain;display:block;}
+
+.logo-text{font-size:17px;font-weight:800;letter-spacing:-0.03em;color:var(--text);}
+.logo-sub{font-size:10px;color:var(--muted);font-weight:500;letter-spacing:0.04em;margin-top:1px;}
+.header-right{display:flex;align-items:center;gap:8px;}
+.live-dot{
+  display:flex;align-items:center;gap:6px;font-size:11px;font-weight:600;
+  color:var(--green);background:var(--green-dim);padding:5px 10px;border-radius:100px;
+  border:1px solid rgba(34,197,94,0.2);
+}
+.live-dot i{font-size:7px;animation:blink 1.8s ease-in-out infinite;}
+@keyframes blink{0%,100%{opacity:1;}50%{opacity:0.2;}}
+.lang-switch-btn{
+  display:flex;align-items:center;gap:5px;font-size:11px;font-weight:700;color:var(--muted);
+  background:var(--surface);padding:5px 10px;border-radius:100px;
+  border:1px solid var(--border);cursor:pointer;
+  transition:border-color 0.2s,color 0.2s;
+}
+.lang-switch-btn:hover{border-color:rgba(255,107,26,0.4);color:var(--orange);}
+
+/* HERO */
+.hero{padding:8px 0 32px;text-align:center;}
+.hero-tag{
+  display:inline-flex;align-items:center;gap:7px;
+  background:var(--orange-dim);border:1px solid rgba(255,107,26,0.25);
+  color:var(--orange);font-size:11px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;
+  padding:5px 13px;border-radius:100px;margin-bottom:18px;
+}
+.hero h1{
+  font-size:clamp(1.75rem,7vw,2.4rem);font-weight:800;
+  line-height:1.12;letter-spacing:-0.03em;color:var(--text);margin-bottom:14px;
+}
+.hero h1.deva{font-family:var(--font-deva);font-size:clamp(1.45rem,5.5vw,2rem);}
+.hero h1 span{color:var(--orange);}
+.hero p{font-size:14px;color:var(--muted);line-height:1.7;max-width:290px;margin:0 auto;}
+.hero p.deva{font-family:var(--font-deva);}
+
+/* SECTION LABELS */
+.sec-label{
+  font-size:10px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;
+  color:var(--muted);margin-bottom:12px;padding-left:2px;
+}
+
+/* CARDS */
+.card{
+  background:var(--surface);border:1px solid var(--border);border-radius:18px;
+  overflow:hidden;cursor:pointer;
+  transition:transform 0.22s cubic-bezier(.22,.68,0,1.2),border-color 0.2s;
+  display:block;text-decoration:none;color:inherit;margin-bottom:12px;
+}
+.card:active{transform:scale(0.975);}
+.card-inner{display:flex;align-items:center;gap:16px;padding:18px;}
+.card-icon{width:48px;height:48px;border-radius:13px;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0;}
+.card-icon.orange{background:var(--orange-dim);color:var(--orange);}
+.card-icon.white{background:rgba(255,255,255,0.06);color:var(--text);}
+.card-icon.blue{background:rgba(96,165,250,0.1);color:#60A5FA;}
+.card-body{flex:1;min-width:0;}
+.card-title{font-size:15px;font-weight:700;letter-spacing:-0.01em;margin-bottom:3px;}
+.card-title.deva,.card-desc.deva,.panel-text.deva{font-family:var(--font-deva);}
+.card-desc{font-size:12px;color:var(--muted);line-height:1.5;}
+.card-arrow{
+  width:32px;height:32px;border-radius:50%;background:rgba(255,255,255,0.05);
+  display:flex;align-items:center;justify-content:center;font-size:13px;color:var(--muted);
+  flex-shrink:0;transition:background 0.2s,color 0.2s,transform 0.2s;
+}
+.card:hover .card-arrow{background:var(--orange);color:#fff;transform:translateX(2px);}
+
+/* PRIMARY CARD */
+.card-primary{background:var(--orange);border-color:transparent;position:relative;overflow:hidden;}
+.card-primary::before{
+  content:'';position:absolute;inset:0;
+  background:radial-gradient(ellipse 80% 60% at 110% 110%,rgba(0,0,0,0.3) 0%,transparent 70%);
+  pointer-events:none;
+}
+.card-primary .card-title{font-size:16px;color:#fff;}
+.card-primary .card-desc{color:rgba(255,255,255,0.72);}
+.card-primary .card-icon{background:rgba(255,255,255,0.18);color:#fff;}
+.card-primary .card-arrow{background:rgba(255,255,255,0.2);color:#fff;}
+.card-primary:hover .card-arrow{background:rgba(255,255,255,0.35);}
+.card-primary:active{transform:scale(0.975);}
+.free-pill{
+  position:absolute;top:14px;right:52px;
+  background:rgba(255,255,255,0.22);color:#fff;
+  font-size:10px;font-weight:700;letter-spacing:0.07em;text-transform:uppercase;
+  padding:3px 9px;border-radius:100px;
+}
+
+/* PANELS */
+.panel{
+  background:var(--surface2);border:1px solid var(--border);border-radius:18px;overflow:hidden;
+  max-height:0;opacity:0;
+  transition:max-height 0.45s cubic-bezier(.4,0,.2,1),opacity 0.3s ease,margin 0.3s ease;
+  margin-bottom:0;
+}
+.panel.open{max-height:820px;opacity:1;margin-bottom:12px;}
+.panel-inner{padding:20px;}
+.video-box{
+  background:var(--bg);border-radius:13px;overflow:hidden;
+  aspect-ratio:16/9;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;gap:10px;cursor:pointer;
+  border:1px solid var(--border);position:relative;transition:border-color 0.2s;
+}
+.video-box:hover{border-color:rgba(255,107,26,0.4);}
+.play-btn{
+  width:52px;height:52px;border-radius:50%;background:var(--orange);
+  display:flex;align-items:center;justify-content:center;font-size:18px;color:#fff;padding-left:3px;
+  transition:transform 0.2s;
+}
+.video-box:hover .play-btn{transform:scale(1.08);}
+.video-label{font-size:12px;color:var(--muted);font-weight:500;}
+.video-box iframe{position:absolute;inset:0;width:100%;height:100%;border:none;}
+.panel-text{font-size:13px;color:var(--muted);line-height:1.7;margin-top:14px;}
+.cs-badge{
+  display:inline-flex;align-items:center;gap:5px;
+  font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:0.06em;
+  color:rgba(255,255,255,0.3);background:rgba(255,255,255,0.05);
+  border:1px solid rgba(255,255,255,0.08);padding:3px 9px;border-radius:100px;margin-left:6px;
+  vertical-align:middle;
+}
+
+/* SUPPORT */
+.support-row{
+  display:flex;align-items:center;gap:12px;padding:13px 16px;
+  background:var(--surface);border:1px solid var(--border);border-radius:13px;
+  text-decoration:none;color:var(--text);margin-bottom:8px;
+  transition:border-color 0.2s,transform 0.2s;
+}
+.support-row:hover{border-color:rgba(255,255,255,0.18);transform:translateX(3px);}
+.support-row:last-child{margin-bottom:0;}
+.sup-icon{width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;}
+.sup-title{font-size:13px;font-weight:600;}
+.sup-desc{font-size:11px;color:var(--muted);margin-top:1px;}
+.sup-title.deva,.sup-desc.deva{font-family:var(--font-deva);}
+.sup-arrow{margin-left:auto;font-size:12px;color:var(--muted);}
+
+/* FOOTER */
+.footer{text-align:center;padding-top:32px;}
+.footer-logo{font-size:15px;font-weight:800;letter-spacing:-0.02em;margin-bottom:6px;}
+.footer-logo span{color:var(--orange);}
+.footer-links{display:flex;align-items:center;justify-content:center;gap:16px;margin:10px 0 14px;}
+.footer-link{font-size:11px;color:var(--muted);text-decoration:none;}
+.footer-link:hover{color:var(--text);}
+.divider{height:1px;background:var(--border);margin:24px 0;}
+
+@keyframes fadeUp{from{opacity:0;transform:translateY(18px);}to{opacity:1;transform:translateY(0);}}
+.fu{animation:fadeUp 0.55s cubic-bezier(.22,.68,0,1.2) both;}
+.d1{animation-delay:.05s}.d2{animation-delay:.1s}.d3{animation-delay:.17s}
+.d4{animation-delay:.24s}.d5{animation-delay:.31s}.d6{animation-delay:.38s}
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════
+     LANGUAGE PICKER SCREEN
+═══════════════════════════════════════ -->
+<div id="lang-screen">
+
+  <div class="logo-svg-slot">
+    <!-- ▼▼▼ REPLACE THIS WITH YOUR ACTUAL LOGO SVG ▼▼▼ -->
+    <svg id="svg" version="1.1" viewBox="0 0 300 300" width="300" height="300" xmlns="http://www.w3.org/2000/svg">
+      <style>
+        /* 1. Wrapper Animation: Handles the anti-gravity float and the reactive light cast */
+        @keyframes levitate-and-glow {
+          0%, 100% { 
+            transform: translateY(0px) scale(1);
+            filter: drop-shadow(0px 2px 4px rgba(253, 73, 11, 0.4));
+          }
+          50% { 
+            transform: translateY(-6px) scale(1.02);
+            /* Glow expands and softens as it gets 'higher' off the page */
+            filter: drop-shadow(0px 12px 20px rgba(253, 73, 11, 0.7));
+          }
+        }
+
+        /* 2. Edge Animation: Makes the white stroke 'breathe' like a power indicator */
+        @keyframes edge-shift {
+          0%, 100% {
+            stroke: rgba(255, 255, 255, 0.4); /* Soft, subtle white edge */
+          }
+          50% {
+            stroke: rgba(255, 255, 255, 1); /* Crisp, bright white edge */
+          }
+        }
+
+        .animated-logo-wrapper {
+          animation: levitate-and-glow 4s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+          transform-origin: center;
+        }
+
+        .universal-fill {
+          fill: #111821 !important;
+          stroke-width: 1.5px;
+          stroke-linejoin: round;
+          animation: edge-shift 4s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+        }
+      </style>
+
+      <defs>
+        <clipPath id="clip-1">
+          <rect x="0" y="0" transform="scale(0.14648,0.14648)" width="2048" height="2048" fill="none"/>
+        </clipPath>
+        <linearGradient x1="162.52588" y1="112.7417" x2="162.47021" y2="94.43745" gradientUnits="userSpaceOnUse" id="color-1">
+          <stop offset="0" stop-color="#fea105"/>
+          <stop offset="1" stop-color="#ff450c"/>
+        </linearGradient>
+        <linearGradient x1="162.55811" y1="124.50396" x2="162.60498" y2="112.88965" gradientUnits="userSpaceOnUse" id="color-2">
+          <stop offset="0" stop-color="#ffaa07"/>
+          <stop offset="1" stop-color="#fc4309"/>
+        </linearGradient>
+        <linearGradient x1="204.2124" y1="101.53096" x2="202.85449" y2="102.82778" gradientUnits="userSpaceOnUse" id="color-3">
+          <stop offset="0" stop-color="#2c3642"/>
+          <stop offset="1" stop-color="#5b5a56"/>
+        </linearGradient>
+      </defs>
+
+      <g class="animated-logo-wrapper">
+        <g clip-path="url(#clip-1)" fill="none" fill-rule="nonzero" stroke="none" stroke-width="1" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="10" stroke-dasharray="" stroke-dashoffset="0" font-family="none" font-weight="none" font-size="none" text-anchor="none" style="mix-blend-mode: normal">
+          
+          <path class="universal-fill" d="M50.85469,80.61035c2.2043,-0.19395 5.70762,-0.14502 7.93418,-0.05933c6.56001,0.25254 14.98682,-0.86514 21.05259,1.44097c4.83501,1.85991 9.00278,5.12417 11.96675,9.3728c2.24414,3.23921 3.47842,6.80669 4.95103,10.41665l4.09219,9.90601l16.63345,40.87456c2.24385,5.50342 4.44287,11.07275 6.68291,16.56006c1.2022,2.72168 3.94395,5.69238 6.78091,6.68262c3.16011,1.10449 7.26064,0.78369 10.5832,0.77783l12.54917,-0.00879l14.71289,0.0249c2.82568,0.01318 8.01709,0.35303 10.75635,-0.41162c0.95947,-0.26807 1.86328,-3.01904 2.26465,-4.11914c-2.47412,-3.93311 -5.37744,-3.95801 -9.5332,-3.87451c-7.71826,0.15674 -15.49072,-0.14648 -23.20605,0.02637c0.55225,1.72852 1.71387,4.53516 2.4668,6.21094c-4.59375,0.10254 -9.23848,-0.0498 -13.8375,0.01611c-0.95127,0.01465 -1.96318,0.02197 -2.9083,-0.06006c-4.63857,-11.78906 -9.45059,-23.62939 -13.73481,-35.5292c-1.14478,-3.17974 -3.26865,-7.61353 -4.15356,-10.66099c2.30317,-0.14004 5.2957,-0.05215 7.66436,-0.04277l12.34292,0.02241l39.67134,-0.00586l39.71924,-0.03384c-0.65479,1.85962 -1.77979,4.34282 -2.55469,6.19438l-4.45166,10.75796l-3.65918,9.06694c-1.87646,4.69629 -3.91699,10.83398 -9.44678,12.13477c-2.64844,0.62256 -5.68066,0.94775 -8.40234,1.50586c2.41406,0.68262 8.80078,1.63916 11.58105,2.14893c-0.94336,3.21387 -2.79639,7.20703 -3.96533,10.2876c-1.64795,4.3418 -2.95752,10.31396 -7.9585,11.7583c-3.75146,1.08105 -9.47168,0.66504 -13.33154,0.66211l-19.83545,0.00439l-15.20259,-0.00293c-5.84619,0.00586 -10.35234,0.4292 -15.88154,-1.90723c-4.7061,-2.0083 -8.75449,-5.29687 -11.68506,-9.49072c-2.57622,-3.73682 -3.67969,-7.20996 -5.34419,-11.35547l-4.5249,-11.1709l-18.00747,-44.2522c-1.65952,-4.07549 -4.54248,-12.82676 -7.72939,-15.60776c-1.32803,-1.14727 -2.9042,-1.97036 -4.60444,-2.40469c-2.09487,-0.51416 -5.30552,-0.37119 -7.54687,-0.36284l-8.74688,0.03735c-2.54722,0.01113 -5.00215,0.22559 -7.31909,-1.14214c-3.7229,-2.19785 -4.94253,-7.21743 -2.53154,-10.85845c1.39146,-2.10146 3.25371,-3.04233 5.69692,-3.52939zM142.65059,152.17969l27.64336,0.01611l7.771,0.01904c3.28564,0.01025 6.72363,0.54199 9.06299,-2.19287c0.66357,-1.10596 1.98633,-4.49956 2.44043,-5.80723c-13.63916,-0.46245 -27.63867,0.23555 -41.31152,-0.00835c-2.75566,-0.04907 -5.54443,-0.03369 -8.30112,0.00806l-0.26309,0.08159c-0.00498,0.64863 2.52993,6.79966 2.95796,7.88364z"/>
+          
+          <path d="M152.05371,40.07432c16.17041,-1.09321 35.69531,3.96533 49.65527,11.96162c23.07568,13.04062 40.01807,34.72295 47.09326,60.26719c5.87842,22.24058 4.29785,45.796 -4.5,67.05088c-2.47705,6.02197 -4.85889,10.29639 -8.05225,15.84961c-5.22949,0.2373 -10.70508,-0.09961 -15.95947,0.03516c-2.20752,0.05566 -4.76367,0.06885 -6.94336,-0.10693c11.85498,-15.05127 18.16406,-35.3335 18.25488,-54.39697c0.12451,-16.41226 -4.49707,-32.51089 -13.30957,-46.35762c-12.67676,-20.00537 -32.80518,-34.1332 -55.92773,-39.25693c-22.59858,-4.96846 -46.24102,-1.14434 -66.12056,10.69497c-4.31323,2.55176 -8.22188,5.45332 -12.16143,8.54224c-0.81255,0.63721 -1.65645,1.27808 -2.53198,1.82461l-0.18501,0.11426c1.48081,-2.1312 2.95034,-4.01543 4.73027,-5.90771c17.07568,-18.15205 41.21572,-29.14541 65.95767,-30.31436z" fill="#fd490b"/>
+          
+          <path class="universal-fill" d="M59.54971,112.65088l0.3063,0.02959l0.14897,-0.40313c0.3085,0.27275 0.35859,0.6668 0.47812,1.08135c0.42231,0.31289 0.19468,0.22822 0.69976,0.28535c-0.23071,1.26182 -0.39199,5.57314 -0.42803,6.89912c-0.36694,11.34565 1.10918,22.67578 4.37065,33.54814c7.89653,26.05371 23.84502,47.33936 47.99648,60.25635c0.32783,0.76611 0.63252,1.43701 1.03022,2.1709c2.22583,4.16895 6.04761,7.25391 10.59067,8.55176c4.7959,1.37402 9.2918,0.62842 13.60239,-1.74463c11.66499,1.98047 25.89302,1.60107 37.21479,-2.09033c0.88623,0.63428 1.48096,1.18359 2.47559,1.82373c3.09668,1.9834 6.75,2.91211 10.4165,2.64844c4.65234,-0.28418 8.98535,-2.45801 11.99121,-6.01904c3.84521,-4.47656 4.46191,-9.05566 4.00928,-14.6792c0.95654,-0.86719 1.9248,-1.72119 2.90186,-2.56348c7.70215,-0.17871 16.35205,-0.08789 24.07764,-0.01758c-1.35645,2.00977 -3.61523,4.63477 -5.25146,6.47607c-8.09033,9.17725 -17.79199,16.79443 -28.62598,22.47656c-22.81494,11.86377 -47.87988,14.33936 -72.46729,6.52441c-25.05688,-8.09326 -45.88667,-25.78418 -57.92944,-49.19971c-8.6647,-16.67432 -12.60132,-35.40088 -11.3833,-54.15132c0.39229,-7.07212 1.6311,-15.16333 3.77505,-21.90337z"/>
+          
+          <path d="M112.66348,112.90752c0.35947,-0.58374 1.48989,-1.8085 1.9897,-2.39692l3.91787,-4.65161l10.1168,-11.95884c0.77329,-0.90527 1.41782,-1.84028 2.21499,-2.73062c2.04302,-0.33354 4.19678,-0.21768 6.27642,-0.1979l8.03423,0.07573l25.3002,0.04775l15.2168,-0.04014c2.03613,-0.02227 7.24219,-0.20786 9.00439,0.08306c1.08984,1.45488 2.29541,2.85454 3.50977,4.21025c4.57324,5.1041 8.76123,10.51465 13.27295,15.66577c0.58301,0.66562 1.35791,1.51655 1.6875,2.3272c0.22266,2.96616 -0.6709,6.33706 -2.9502,8.38872c-0.9375,1.48374 -3.68408,3.33501 -5.36865,3.8417c-6.78076,2.03979 -13.88965,-1.07358 -16.19971,-7.90137c-0.23584,-0.62974 -0.38232,-1.25332 -0.55225,-1.90313c-1.86035,2.75625 -1.54395,5.33174 -4.81934,7.74668c-3.25928,2.40322 -6.11572,3.00894 -10.15283,2.54531c-4.20703,-0.4834 -7.88379,-3.70884 -9.42334,-7.54512c-0.36035,-0.93062 -0.5376,-2.46606 -1.01221,-3.06797l-0.15967,0.11484c-1.77539,7.12588 -5.92236,10.89741 -13.35937,10.60254c-3.87539,-0.15366 -6.96855,-2.02178 -9.27407,-5.1312c-1.21787,-1.64253 -1.82256,-3.59033 -2.56465,-5.44629c-0.68276,2.28428 -1.35645,4.35645 -2.90142,6.22925c-6.77432,8.21206 -21.07778,3.9832 -22.13877,-6.61362c-0.04189,-0.95156 -0.11689,-1.47085 0.33486,-2.29409z" fill="url(#color-1)"/>
+          <path d="M112.66348,112.90752c0.4563,-0.32637 1.03521,-0.87026 1.55742,-1.26299c-0.28169,0.47241 -0.47329,0.65361 -0.53555,1.16499c0.83628,0.20156 4.75986,0.03281 5.83022,0.02769c3.10547,-0.01494 6.23481,-0.01904 9.34526,-0.00967l69.56836,0.0145c2.12695,-0.01978 12.2959,0.2792 13.50586,-0.09902c0.19482,0.20625 0.70752,0.77432 0.89502,0.92915l0.375,-0.33091c0.22266,2.96616 -0.6709,6.33706 -2.9502,8.38872c-0.9375,1.48374 -3.68408,3.33501 -5.36865,3.8417c-6.78076,2.03979 -13.88965,-1.07358 -16.19971,-7.90137c-0.23584,-0.62974 -0.38232,-1.25332 -0.55225,-1.90313c-1.86035,2.75625 -1.54395,5.33174 -4.81934,7.74668c-3.25928,2.40322 -6.11572,3.00894 -10.15283,2.54531c-4.20703,-0.4834 -7.88379,-3.70884 -9.42334,-7.54512c-0.36035,-0.93062 -0.5376,-2.46606 -1.01221,-3.06797l-0.15967,0.11484c-1.77539,7.12588 -5.92236,10.89741 -13.35937,10.60254c-3.87539,-0.15366 -6.96855,-2.02178 -9.27407,-5.1312c-1.21787,-1.64253 -1.82256,-3.59033 -2.56465,-5.44629c-0.68276,2.28428 -1.35645,4.35645 -2.90142,6.22925c-6.77432,8.21206 -21.07778,3.9832 -22.13877,-6.61362c-0.04189,-0.95156 -0.11689,-1.47085 0.33486,-2.29409z" fill="url(#color-2)"/>
+          
+          <path d="M183.21533,122.64668c1.03271,-0.76875 3.10986,-3.27407 3.46875,-4.48799c0.35742,-1.20117 1.14551,-2.90889 1.48828,-4.06479c0.26074,1.37168 0.42188,2.22715 0.85254,3.54038l-0.33838,0.03604c-0.23584,-0.62974 -0.38232,-1.25332 -0.55225,-1.90313c-1.86035,2.75625 -1.54395,5.33174 -4.81934,7.74668c-3.25928,2.40322 -6.11572,3.00894 -10.15283,2.54531c-4.20703,-0.4834 -7.88379,-3.70884 -9.42334,-7.54512c-0.36035,-0.93062 -0.5376,-2.46606 -1.01221,-3.06797l-0.15967,0.11484c-1.77539,7.12588 -5.92236,10.89741 -13.35937,10.60254c-3.87539,-0.15366 -6.96855,-2.02178 -9.27407,-5.1312c-1.21787,-1.64253 -1.82256,-3.59033 -2.56465,-5.44629c-0.68276,2.28428 -1.35645,4.35645 -2.90142,6.22925c-6.77432,8.21206 -21.07778,3.9832 -22.13877,-6.61362c0.86338,2.33262 2.28105,5.72769 4.28218,7.33799c2.95269,2.20151 6.23159,3.26719 9.92476,2.74131c0.85693,-0.12202 3.86016,-0.88901 4.29727,-1.54746c2.47939,-1.11563 5.36118,-4.35366 5.79375,-7.027c0.06343,-0.39229 0.40576,-2.44907 0.45234,-2.54121c0.51533,0.82178 1.2186,3.17065 1.65762,4.14229c0.62373,1.38047 1.56504,2.62178 2.49346,3.80581c1.77949,-0.00337 14.71143,-0.38408 15.45703,0.00718c0.11426,0.35918 -0.02197,0.60996 -0.14062,0.98057l0.11865,0.15088c0.21533,-0.04263 0.43652,-0.0832 0.65186,-0.1314c0.88916,-0.3605 3.21533,-2.96982 3.71631,-3.8729c0.47754,-0.85957 0.71191,-3.3123 1.51758,-3.98701c0.65625,0.11367 1.04443,1.7231 1.26123,2.36982c0.62988,1.87881 2.10205,3.80933 3.65479,5.01079c2.39063,2.07891 5.51953,3.10459 8.67773,2.84458c2.4624,-0.18164 5.23242,-1.15034 7.0708,-2.83916z" fill="#474945"/>
+          <path d="M141.22998,122.11333c1.77949,-0.00337 14.71143,-0.38408 15.45703,0.00718c0.11426,0.35918 -0.02197,0.60996 -0.14062,0.98057l0.11865,0.15088c0.21533,-0.04263 0.43652,-0.0832 0.65186,-0.1314c-2.66602,2.20547 -6.77783,2.83008 -10.07959,2.06997c-2.49595,-0.57466 -4.01924,-1.57661 -6.00732,-3.0772z" fill="#fb9806"/>
+          <path d="M167.4668,122.64126c0.70313,0.07793 0.85107,0.18398 1.42236,0.59985l-0.13477,-0.19658c-0.14795,-0.21841 -0.20654,-0.31377 -0.32666,-0.53892c0.91553,-1.41006 8.63379,-0.34409 10.56299,-0.5064c0.67383,-0.05669 2.54443,-0.03223 3.14502,0.13169l0.07471,0.29546l-0.11865,0.11704l0.00586,0.23262c0.65332,0.15908 0.44092,-0.13257 1.11768,-0.12935c-1.83838,1.68882 -4.6084,2.65752 -7.0708,2.83916c-3.1582,0.26001 -6.28711,-0.76567 -8.67773,-2.84458z" fill="#fb9806"/>
+          <path d="M116.61079,122.5396c1.64502,-0.09111 1.68472,0.65376 2.52817,0.61172c0.16729,-0.09448 0.33457,-0.18882 0.50171,-0.2833c2.27915,0.05083 6.84697,-0.00088 8.9209,0.38804l0.24683,0.18413c-0.18237,0.4251 -0.65259,0.52383 -1.16089,0.72759l-0.33926,0.13418c1.99526,0.10781 2.9959,-0.66592 3.52456,-0.56851c-0.43711,0.65845 -3.44033,1.42544 -4.29727,1.54746c-3.69316,0.52588 -6.97207,-0.53979 -9.92476,-2.74131z" fill="#fb9806"/>
+          <path d="M188.68652,117.67031l0.33838,-0.03604c0.56982,1.71064 3.24463,5.19331 4.90723,5.7791c2.93848,2.56904 10.32275,2.65151 13.2085,0.01582c1.11621,-0.50054 2.25146,-1.70903 3.05273,-2.61255c-0.05566,0.49834 -0.11719,0.48472 0.06152,0.91333c-0.9375,1.48374 -3.68408,3.33501 -5.36865,3.8417c-6.78076,2.03979 -13.88965,-1.07358 -16.19971,-7.90137z" fill="#474945"/>
+          <path d="M193.93213,123.41338c0.60352,0.10503 1.92627,0.70723 2.56055,0.97002l0.26221,-0.10957c-0.5874,-0.3624 -1.18213,-0.67236 -1.64502,-1.17422l0.11279,-0.16816c0.76465,-0.06401 7.31543,0.63281 7.71094,0.86455l0.00439,0.20479c-1.06201,0.47007 -2.55762,0.42598 -3.72363,0.44722c2.00537,0.32358 5.12842,-0.1689 7.10303,-0.82207c0.37354,-0.12334 0.22559,-0.24316 0.82324,-0.19673c-2.88574,2.63569 -10.27002,2.55322 -13.2085,-0.01582z" fill="#fb9806"/>
+          <path d="M212.83008,113.67217l0.375,-0.33091c0.22266,2.96616 -0.6709,6.33706 -2.9502,8.38872c-0.17871,-0.42861 -0.11719,-0.41499 -0.06152,-0.91333c1.09717,-1.58716 3.21387,-5.19536 2.63672,-7.14448z" fill="#474945"/>
+          
+          <path class="universal-fill" d="M127.60488,196.26416c6.71001,-1.03418 12.9876,3.56836 14.01782,10.28027c1.03022,6.71045 -3.57744,12.98438 -10.28906,14.00977c-6.70503,1.02539 -12.97207,-3.57715 -14.00127,-10.28174c-1.0292,-6.70459 3.5688,-12.97412 10.27251,-14.0083zM130.4499,213.28857c2.7208,-0.5376 4.48301,-3.18896 3.9249,-5.90625c-0.55811,-2.71582 -3.22266,-4.45752 -5.93496,-3.87891c-2.68315,0.57275 -4.40215,3.20215 -3.85005,5.89014c0.5521,2.68652 3.16846,4.42529 5.86011,3.89502z"/>
+          <path class="universal-fill" d="M186.92578,196.14404c6.78955,-0.19922 12.44971,5.15332 12.62988,11.94287c0.17871,6.79102 -5.19141,12.43506 -11.98096,12.59326c-6.76172,0.1582 -12.37646,-5.18408 -12.55518,-11.94434c-0.17871,-6.76172 5.146,-12.39258 11.90625,-12.5918zM188.31152,213.27393c2.67627,-0.56689 4.39746,-3.18311 3.8584,-5.8667c-0.54053,-2.68213 -3.14062,-4.42822 -5.82861,-3.91406c-2.72461,0.52002 -4.50146,3.16406 -3.95361,5.88428c0.54785,2.72021 3.20947,4.4707 5.92383,3.89648z"/>
+        </g>
+      </g>
+    </svg>
+    <!-- ▲▲▲ END PLACEHOLDER ▲▲▲ -->
+  </div>
+
+  <div class="lang-heading">Choose your language</div>
+  <div class="lang-sub">अपनी भाषा चुनें &nbsp;·&nbsp; आपली भाषा निवडा</div>
+
+  <div class="lang-grid">
+    <button class="lang-btn" onclick="setLang('en')">
+      <div class="lang-flag">🇮🇳</div>
+      <div>
+        <div class="lang-name">English</div>
+        <div class="lang-native">Continue in English</div>
+      </div>
+      <div class="lang-arrow"><i class="fa-solid fa-arrow-right"></i></div>
+    </button>
+    <button class="lang-btn" onclick="setLang('hi')">
+      <div class="lang-flag">🇮🇳</div>
+      <div>
+        <div class="lang-name" style="font-family:var(--font-deva);">हिंदी</div>
+        <div class="lang-native">हिंदी में जारी रखें</div>
+      </div>
+      <div class="lang-arrow"><i class="fa-solid fa-arrow-right"></i></div>
+    </button>
+    <button class="lang-btn" onclick="setLang('mr')">
+      <div class="lang-flag">🇮🇳</div>
+      <div>
+        <div class="lang-name" style="font-family:var(--font-deva);">मराठी</div>
+        <div class="lang-native">मराठीत सुरू ठेवा</div>
+      </div>
+      <div class="lang-arrow"><i class="fa-solid fa-arrow-right"></i></div>
+    </button>
+  </div>
+
+</div>
+
+
+<!-- ═══════════════════════════════════════
+     MAIN PAGE
+═══════════════════════════════════════ -->
+<div id="main-page">
+<div class="wrap">
+
+  <!-- HEADER -->
+  <div class="header fu">
+    <div class="logo-area">
+
+      <div class="header-logo-slot">
+        <!-- ▼▼▼ REPLACE WITH YOUR LOGO MARK ▼▼▼ -->
+        <svg id="svg" version="1.1" viewBox="0 0 300 300" width="300" height="300" xmlns="http://www.w3.org/2000/svg">
+          <style>
+            /* 1. Wrapper Animation: Handles the anti-gravity float and the reactive light cast */
+            @keyframes levitate-and-glow {
+              0%, 100% { 
+                transform: translateY(0px) scale(1);
+                filter: drop-shadow(0px 2px 4px rgba(253, 73, 11, 0.4));
+              }
+              50% { 
+                transform: translateY(-6px) scale(1.02);
+                /* Glow expands and softens as it gets 'higher' off the page */
+                filter: drop-shadow(0px 12px 20px rgba(253, 73, 11, 0.7));
+              }
+            }
+
+            /* 2. Edge Animation: Makes the white stroke 'breathe' like a power indicator */
+            @keyframes edge-shift {
+              0%, 100% {
+                stroke: rgba(255, 255, 255, 0.4); /* Soft, subtle white edge */
+              }
+              50% {
+                stroke: rgba(255, 255, 255, 1); /* Crisp, bright white edge */
+              }
+            }
+
+            .animated-logo-wrapper {
+              animation: levitate-and-glow 4s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+              transform-origin: center;
+            }
+
+            .universal-fill {
+              fill: #111821 !important;
+              stroke-width: 1.5px;
+              stroke-linejoin: round;
+              animation: edge-shift 4s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+            }
+          </style>
+
+          <defs>
+            <clipPath id="clip-1">
+              <rect x="0" y="0" transform="scale(0.14648,0.14648)" width="2048" height="2048" fill="none"/>
+            </clipPath>
+            <linearGradient x1="162.52588" y1="112.7417" x2="162.47021" y2="94.43745" gradientUnits="userSpaceOnUse" id="color-1">
+              <stop offset="0" stop-color="#fea105"/>
+              <stop offset="1" stop-color="#ff450c"/>
+            </linearGradient>
+            <linearGradient x1="162.55811" y1="124.50396" x2="162.60498" y2="112.88965" gradientUnits="userSpaceOnUse" id="color-2">
+              <stop offset="0" stop-color="#ffaa07"/>
+              <stop offset="1" stop-color="#fc4309"/>
+            </linearGradient>
+            <linearGradient x1="204.2124" y1="101.53096" x2="202.85449" y2="102.82778" gradientUnits="userSpaceOnUse" id="color-3">
+              <stop offset="0" stop-color="#2c3642"/>
+              <stop offset="1" stop-color="#5b5a56"/>
+            </linearGradient>
+          </defs>
+
+          <g class="animated-logo-wrapper">
+            <g clip-path="url(#clip-1)" fill="none" fill-rule="nonzero" stroke="none" stroke-width="1" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="10" stroke-dasharray="" stroke-dashoffset="0" font-family="none" font-weight="none" font-size="none" text-anchor="none" style="mix-blend-mode: normal">
+              
+              <path class="universal-fill" d="M50.85469,80.61035c2.2043,-0.19395 5.70762,-0.14502 7.93418,-0.05933c6.56001,0.25254 14.98682,-0.86514 21.05259,1.44097c4.83501,1.85991 9.00278,5.12417 11.96675,9.3728c2.24414,3.23921 3.47842,6.80669 4.95103,10.41665l4.09219,9.90601l16.63345,40.87456c2.24385,5.50342 4.44287,11.07275 6.68291,16.56006c1.2022,2.72168 3.94395,5.69238 6.78091,6.68262c3.16011,1.10449 7.26064,0.78369 10.5832,0.77783l12.54917,-0.00879l14.71289,0.0249c2.82568,0.01318 8.01709,0.35303 10.75635,-0.41162c0.95947,-0.26807 1.86328,-3.01904 2.26465,-4.11914c-2.47412,-3.93311 -5.37744,-3.95801 -9.5332,-3.87451c-7.71826,0.15674 -15.49072,-0.14648 -23.20605,0.02637c0.55225,1.72852 1.71387,4.53516 2.4668,6.21094c-4.59375,0.10254 -9.23848,-0.0498 -13.8375,0.01611c-0.95127,0.01465 -1.96318,0.02197 -2.9083,-0.06006c-4.63857,-11.78906 -9.45059,-23.62939 -13.73481,-35.5292c-1.14478,-3.17974 -3.26865,-7.61353 -4.15356,-10.66099c2.30317,-0.14004 5.2957,-0.05215 7.66436,-0.04277l12.34292,0.02241l39.67134,-0.00586l39.71924,-0.03384c-0.65479,1.85962 -1.77979,4.34282 -2.55469,6.19438l-4.45166,10.75796l-3.65918,9.06694c-1.87646,4.69629 -3.91699,10.83398 -9.44678,12.13477c-2.64844,0.62256 -5.68066,0.94775 -8.40234,1.50586c2.41406,0.68262 8.80078,1.63916 11.58105,2.14893c-0.94336,3.21387 -2.79639,7.20703 -3.96533,10.2876c-1.64795,4.3418 -2.95752,10.31396 -7.9585,11.7583c-3.75146,1.08105 -9.47168,0.66504 -13.33154,0.66211l-19.83545,0.00439l-15.20259,-0.00293c-5.84619,0.00586 -10.35234,0.4292 -15.88154,-1.90723c-4.7061,-2.0083 -8.75449,-5.29687 -11.68506,-9.49072c-2.57622,-3.73682 -3.67969,-7.20996 -5.34419,-11.35547l-4.5249,-11.1709l-18.00747,-44.2522c-1.65952,-4.07549 -4.54248,-12.82676 -7.72939,-15.60776c-1.32803,-1.14727 -2.9042,-1.97036 -4.60444,-2.40469c-2.09487,-0.51416 -5.30552,-0.37119 -7.54687,-0.36284l-8.74688,0.03735c-2.54722,0.01113 -5.00215,0.22559 -7.31909,-1.14214c-3.7229,-2.19785 -4.94253,-7.21743 -2.53154,-10.85845c1.39146,-2.10146 3.25371,-3.04233 5.69692,-3.52939zM142.65059,152.17969l27.64336,0.01611l7.771,0.01904c3.28564,0.01025 6.72363,0.54199 9.06299,-2.19287c0.66357,-1.10596 1.98633,-4.49956 2.44043,-5.80723c-13.63916,-0.46245 -27.63867,0.23555 -41.31152,-0.00835c-2.75566,-0.04907 -5.54443,-0.03369 -8.30112,0.00806l-0.26309,0.08159c-0.00498,0.64863 2.52993,6.79966 2.95796,7.88364z"/>
+              
+              <path d="M152.05371,40.07432c16.17041,-1.09321 35.69531,3.96533 49.65527,11.96162c23.07568,13.04062 40.01807,34.72295 47.09326,60.26719c5.87842,22.24058 4.29785,45.796 -4.5,67.05088c-2.47705,6.02197 -4.85889,10.29639 -8.05225,15.84961c-5.22949,0.2373 -10.70508,-0.09961 -15.95947,0.03516c-2.20752,0.05566 -4.76367,0.06885 -6.94336,-0.10693c11.85498,-15.05127 18.16406,-35.3335 18.25488,-54.39697c0.12451,-16.41226 -4.49707,-32.51089 -13.30957,-46.35762c-12.67676,-20.00537 -32.80518,-34.1332 -55.92773,-39.25693c-22.59858,-4.96846 -46.24102,-1.14434 -66.12056,10.69497c-4.31323,2.55176 -8.22188,5.45332 -12.16143,8.54224c-0.81255,0.63721 -1.65645,1.27808 -2.53198,1.82461l-0.18501,0.11426c1.48081,-2.1312 2.95034,-4.01543 4.73027,-5.90771c17.07568,-18.15205 41.21572,-29.14541 65.95767,-30.31436z" fill="#fd490b"/>
+              
+              <path class="universal-fill" d="M59.54971,112.65088l0.3063,0.02959l0.14897,-0.40313c0.3085,0.27275 0.35859,0.6668 0.47812,1.08135c0.42231,0.31289 0.19468,0.22822 0.69976,0.28535c-0.23071,1.26182 -0.39199,5.57314 -0.42803,6.89912c-0.36694,11.34565 1.10918,22.67578 4.37065,33.54814c7.89653,26.05371 23.84502,47.33936 47.99648,60.25635c0.32783,0.76611 0.63252,1.43701 1.03022,2.1709c2.22583,4.16895 6.04761,7.25391 10.59067,8.55176c4.7959,1.37402 9.2918,0.62842 13.60239,-1.74463c11.66499,1.98047 25.89302,1.60107 37.21479,-2.09033c0.88623,0.63428 1.48096,1.18359 2.47559,1.82373c3.09668,1.9834 6.75,2.91211 10.4165,2.64844c4.65234,-0.28418 8.98535,-2.45801 11.99121,-6.01904c3.84521,-4.47656 4.46191,-9.05566 4.00928,-14.6792c0.95654,-0.86719 1.9248,-1.72119 2.90186,-2.56348c7.70215,-0.17871 16.35205,-0.08789 24.07764,-0.01758c-1.35645,2.00977 -3.61523,4.63477 -5.25146,6.47607c-8.09033,9.17725 -17.79199,16.79443 -28.62598,22.47656c-22.81494,11.86377 -47.87988,14.33936 -72.46729,6.52441c-25.05688,-8.09326 -45.88667,-25.78418 -57.92944,-49.19971c-8.6647,-16.67432 -12.60132,-35.40088 -11.3833,-54.15132c0.39229,-7.07212 1.6311,-15.16333 3.77505,-21.90337z"/>
+              
+              <path d="M112.66348,112.90752c0.35947,-0.58374 1.48989,-1.8085 1.9897,-2.39692l3.91787,-4.65161l10.1168,-11.95884c0.77329,-0.90527 1.41782,-1.84028 2.21499,-2.73062c2.04302,-0.33354 4.19678,-0.21768 6.27642,-0.1979l8.03423,0.07573l25.3002,0.04775l15.2168,-0.04014c2.03613,-0.02227 7.24219,-0.20786 9.00439,0.08306c1.08984,1.45488 2.29541,2.85454 3.50977,4.21025c4.57324,5.1041 8.76123,10.51465 13.27295,15.66577c0.58301,0.66562 1.35791,1.51655 1.6875,2.3272c0.22266,2.96616 -0.6709,6.33706 -2.9502,8.38872c-0.9375,1.48374 -3.68408,3.33501 -5.36865,3.8417c-6.78076,2.03979 -13.88965,-1.07358 -16.19971,-7.90137c-0.23584,-0.62974 -0.38232,-1.25332 -0.55225,-1.90313c-1.86035,2.75625 -1.54395,5.33174 -4.81934,7.74668c-3.25928,2.40322 -6.11572,3.00894 -10.15283,2.54531c-4.20703,-0.4834 -7.88379,-3.70884 -9.42334,-7.54512c-0.36035,-0.93062 -0.5376,-2.46606 -1.01221,-3.06797l-0.15967,0.11484c-1.77539,7.12588 -5.92236,10.89741 -13.35937,10.60254c-3.87539,-0.15366 -6.96855,-2.02178 -9.27407,-5.1312c-1.21787,-1.64253 -1.82256,-3.59033 -2.56465,-5.44629c-0.68276,2.28428 -1.35645,4.35645 -2.90142,6.22925c-6.77432,8.21206 -21.07778,3.9832 -22.13877,-6.61362c-0.04189,-0.95156 -0.11689,-1.47085 0.33486,-2.29409z" fill="url(#color-1)"/>
+              <path d="M112.66348,112.90752c0.4563,-0.32637 1.03521,-0.87026 1.55742,-1.26299c-0.28169,0.47241 -0.47329,0.65361 -0.53555,1.16499c0.83628,0.20156 4.75986,0.03281 5.83022,0.02769c3.10547,-0.01494 6.23481,-0.01904 9.34526,-0.00967l69.56836,0.0145c2.12695,-0.01978 12.2959,0.2792 13.50586,-0.09902c0.19482,0.20625 0.70752,0.77432 0.89502,0.92915l0.375,-0.33091c0.22266,2.96616 -0.6709,6.33706 -2.9502,8.38872c-0.9375,1.48374 -3.68408,3.33501 -5.36865,3.8417c-6.78076,2.03979 -13.88965,-1.07358 -16.19971,-7.90137c-0.23584,-0.62974 -0.38232,-1.25332 -0.55225,-1.90313c-1.86035,2.75625 -1.54395,5.33174 -4.81934,7.74668c-3.25928,2.40322 -6.11572,3.00894 -10.15283,2.54531c-4.20703,-0.4834 -7.88379,-3.70884 -9.42334,-7.54512c-0.36035,-0.93062 -0.5376,-2.46606 -1.01221,-3.06797l-0.15967,0.11484c-1.77539,7.12588 -5.92236,10.89741 -13.35937,10.60254c-3.87539,-0.15366 -6.96855,-2.02178 -9.27407,-5.1312c-1.21787,-1.64253 -1.82256,-3.59033 -2.56465,-5.44629c-0.68276,2.28428 -1.35645,4.35645 -2.90142,6.22925c-6.77432,8.21206 -21.07778,3.9832 -22.13877,-6.61362c-0.04189,-0.95156 -0.11689,-1.47085 0.33486,-2.29409z" fill="url(#color-2)"/>
+              
+              <path d="M183.21533,122.64668c1.03271,-0.76875 3.10986,-3.27407 3.46875,-4.48799c0.35742,-1.20117 1.14551,-2.90889 1.48828,-4.06479c0.26074,1.37168 0.42188,2.22715 0.85254,3.54038l-0.33838,0.03604c-0.23584,-0.62974 -0.38232,-1.25332 -0.55225,-1.90313c-1.86035,2.75625 -1.54395,5.33174 -4.81934,7.74668c-3.25928,2.40322 -6.11572,3.00894 -10.15283,2.54531c-4.20703,-0.4834 -7.88379,-3.70884 -9.42334,-7.54512c-0.36035,-0.93062 -0.5376,-2.46606 -1.01221,-3.06797l-0.15967,0.11484c-1.77539,7.12588 -5.92236,10.89741 -13.35937,10.60254c-3.87539,-0.15366 -6.96855,-2.02178 -9.27407,-5.1312c-1.21787,-1.64253 -1.82256,-3.59033 -2.56465,-5.44629c-0.68276,2.28428 -1.35645,4.35645 -2.90142,6.22925c-6.77432,8.21206 -21.07778,3.9832 -22.13877,-6.61362c0.86338,2.33262 2.28105,5.72769 4.28218,7.33799c2.95269,2.20151 6.23159,3.26719 9.92476,2.74131c0.85693,-0.12202 3.86016,-0.88901 4.29727,-1.54746c2.47939,-1.11563 5.36118,-4.35366 5.79375,-7.027c0.06343,-0.39229 0.40576,-2.44907 0.45234,-2.54121c0.51533,0.82178 1.2186,3.17065 1.65762,4.14229c0.62373,1.38047 1.56504,2.62178 2.49346,3.80581c1.77949,-0.00337 14.71143,-0.38408 15.45703,0.00718c0.11426,0.35918 -0.02197,0.60996 -0.14062,0.98057l0.11865,0.15088c0.21533,-0.04263 0.43652,-0.0832 0.65186,-0.1314c0.88916,-0.3605 3.21533,-2.96982 3.71631,-3.8729c0.47754,-0.85957 0.71191,-3.3123 1.51758,-3.98701c0.65625,0.11367 1.04443,1.7231 1.26123,2.36982c0.62988,1.87881 2.10205,3.80933 3.65479,5.01079c2.39063,2.07891 5.51953,3.10459 8.67773,2.84458c2.4624,-0.18164 5.23242,-1.15034 7.0708,-2.83916z" fill="#474945"/>
+              <path d="M141.22998,122.11333c1.77949,-0.00337 14.71143,-0.38408 15.45703,0.00718c0.11426,0.35918 -0.02197,0.60996 -0.14062,0.98057l0.11865,0.15088c0.21533,-0.04263 0.43652,-0.0832 0.65186,-0.1314c-2.66602,2.20547 -6.77783,2.83008 -10.07959,2.06997c-2.49595,-0.57466 -4.01924,-1.57661 -6.00732,-3.0772z" fill="#fb9806"/>
+              <path d="M167.4668,122.64126c0.70313,0.07793 0.85107,0.18398 1.42236,0.59985l-0.13477,-0.19658c-0.14795,-0.21841 -0.20654,-0.31377 -0.32666,-0.53892c0.91553,-1.41006 8.63379,-0.34409 10.56299,-0.5064c0.67383,-0.05669 2.54443,-0.03223 3.14502,0.13169l0.07471,0.29546l-0.11865,0.11704l0.00586,0.23262c0.65332,0.15908 0.44092,-0.13257 1.11768,-0.12935c-1.83838,1.68882 -4.6084,2.65752 -7.0708,2.83916c-3.1582,0.26001 -6.28711,-0.76567 -8.67773,-2.84458z" fill="#fb9806"/>
+              <path d="M116.61079,122.5396c1.64502,-0.09111 1.68472,0.65376 2.52817,0.61172c0.16729,-0.09448 0.33457,-0.18882 0.50171,-0.2833c2.27915,0.05083 6.84697,-0.00088 8.9209,0.38804l0.24683,0.18413c-0.18237,0.4251 -0.65259,0.52383 -1.16089,0.72759l-0.33926,0.13418c1.99526,0.10781 2.9959,-0.66592 3.52456,-0.56851c-0.43711,0.65845 -3.44033,1.42544 -4.29727,1.54746c-3.69316,0.52588 -6.97207,-0.53979 -9.92476,-2.74131z" fill="#fb9806"/>
+              <path d="M188.68652,117.67031l0.33838,-0.03604c0.56982,1.71064 3.24463,5.19331 4.90723,5.7791c2.93848,2.56904 10.32275,2.65151 13.2085,0.01582c1.11621,-0.50054 2.25146,-1.70903 3.05273,-2.61255c-0.05566,0.49834 -0.11719,0.48472 0.06152,0.91333c-0.9375,1.48374 -3.68408,3.33501 -5.36865,3.8417c-6.78076,2.03979 -13.88965,-1.07358 -16.19971,-7.90137z" fill="#474945"/>
+              <path d="M193.93213,123.41338c0.60352,0.10503 1.92627,0.70723 2.56055,0.97002l0.26221,-0.10957c-0.5874,-0.3624 -1.18213,-0.67236 -1.64502,-1.17422l0.11279,-0.16816c0.76465,-0.06401 7.31543,0.63281 7.71094,0.86455l0.00439,0.20479c-1.06201,0.47007 -2.55762,0.42598 -3.72363,0.44722c2.00537,0.32358 5.12842,-0.1689 7.10303,-0.82207c0.37354,-0.12334 0.22559,-0.24316 0.82324,-0.19673c-2.88574,2.63569 -10.27002,2.55322 -13.2085,-0.01582z" fill="#fb9806"/>
+              <path d="M212.83008,113.67217l0.375,-0.33091c0.22266,2.96616 -0.6709,6.33706 -2.9502,8.38872c-0.17871,-0.42861 -0.11719,-0.41499 -0.06152,-0.91333c1.09717,-1.58716 3.21387,-5.19536 2.63672,-7.14448z" fill="#474945"/>
+              
+              <path class="universal-fill" d="M127.60488,196.26416c6.71001,-1.03418 12.9876,3.56836 14.01782,10.28027c1.03022,6.71045 -3.57744,12.98438 -10.28906,14.00977c-6.70503,1.02539 -12.97207,-3.57715 -14.00127,-10.28174c-1.0292,-6.70459 3.5688,-12.97412 10.27251,-14.0083zM130.4499,213.28857c2.7208,-0.5376 4.48301,-3.18896 3.9249,-5.90625c-0.55811,-2.71582 -3.22266,-4.45752 -5.93496,-3.87891c-2.68315,0.57275 -4.40215,3.20215 -3.85005,5.89014c0.5521,2.68652 3.16846,4.42529 5.86011,3.89502z"/>
+              <path class="universal-fill" d="M186.92578,196.14404c6.78955,-0.19922 12.44971,5.15332 12.62988,11.94287c0.17871,6.79102 -5.19141,12.43506 -11.98096,12.59326c-6.76172,0.1582 -12.37646,-5.18408 -12.55518,-11.94434c-0.17871,-6.76172 5.146,-12.39258 11.90625,-12.5918zM188.31152,213.27393c2.67627,-0.56689 4.39746,-3.18311 3.8584,-5.8667c-0.54053,-2.68213 -3.14062,-4.42822 -5.82861,-3.91406c-2.72461,0.52002 -4.50146,3.16406 -3.95361,5.88428c0.54785,2.72021 3.20947,4.4707 5.92383,3.89648z"/>
+            </g>
+          </g>
+        </svg>
+        <!-- ▲▲▲ END PLACEHOLDER ▲▲▲ -->
+      </div>
+
+      <div>
+        <div class="logo-text">BazaarIQ</div>
+        <div class="logo-sub" id="hdr-sub">CYBER CAFE PARTNER PORTAL</div>
+      </div>
+    </div>
+    <div class="header-right">
+      <button class="lang-switch-btn" onclick="showLangScreen()">
+        <i class="fa-solid fa-language" style="font-size:13px;"></i>
+        <span id="cur-lang-label">EN</span>
+      </button>
+      <div class="live-dot"><i class="fa-solid fa-circle"></i> <span id="live-txt">LIVE</span></div>
+    </div>
+  </div>
+
+  <!-- HERO -->
+  <div class="hero fu d1">
+    <div class="hero-tag"><i class="fa-solid fa-qrcode"></i> <span id="t-scanned">You scanned our flyer</span></div>
+    <h1 id="hero-h1">India's First<br/>Digital Marketplace<br/>for <span>Cyber Cafes</span></h1>
+    <p id="hero-p">Get your own online storefront. Take orders for PAN, Aadhaar, Certificates &amp; more — all digitally.</p>
+  </div>
+
+  <!-- REGISTER -->
+  <div class="sec-label fu d2" id="lbl-join">Join the Pilot</div>
+  <a href="https://forms.gle/xRaRH9p1XVCkvSVs6" target="_blank" rel="noopener" class="card card-primary fu d2">
+    <span class="free-pill" id="t-free">FREE</span>
+    <div class="card-inner">
+      <div class="card-icon"><i class="fa-solid fa-handshake"></i></div>
+      <div class="card-body">
+        <div class="card-title" id="t-reg-title">Pre-Register as Pilot Partner</div>
+        <div class="card-desc" id="t-reg-desc">Takes 2 minutes. We'll contact you on launch day.</div>
+      </div>
+      <div class="card-arrow"><i class="fa-solid fa-arrow-right"></i></div>
+    </div>
+  </a>
+
+  <!-- LEARN MORE -->
+  <div class="sec-label fu d3" style="margin-top:8px;" id="lbl-learn">Learn More</div>
+
+  <div class="card fu d3" onclick="togglePanel('vision')">
+    <div class="card-inner">
+      <div class="card-icon orange"><i class="fa-solid fa-circle-play"></i></div>
+      <div class="card-body">
+        <div class="card-title" id="t-v-title">What is BazaarIQ? <span class="cs-badge"><i class="fa-solid fa-clock"></i> <span id="t-vcbadge">Video Coming</span></span></div>
+        <div class="card-desc" id="t-v-desc">Watch a short intro about the platform &amp; what you get.</div>
+      </div>
+      <div class="card-arrow" id="arrow-vision"><i class="fa-solid fa-chevron-down"></i></div>
+    </div>
+  </div>
+  <div class="panel" id="panel-vision">
+    <div class="panel-inner">
+      <div class="video-box" id="vbox" onclick="playVideo()">
+        <div class="play-btn"><i class="fa-solid fa-play"></i></div>
+        <div class="video-label" id="t-vidlabel">BazaarIQ Platform Intro — 2 min</div>
+      </div>
+      <p class="panel-text" id="t-v-body">
+        BazaarIQ is India's first digital services marketplace built for cyber cafe owners. Get your own storefront at <strong style="color:var(--text);">bazaariq.in/YourCafeName</strong>, accept orders online, track earnings, and grow beyond walk-ins.
+      </p>
+    </div>
+  </div>
+
+  <!-- WHAT YOU GET -->
+  <div class="card fu d4" onclick="togglePanel('features')">
+    <div class="card-inner">
+      <div class="card-icon white"><i class="fa-solid fa-gift"></i></div>
+      <div class="card-body">
+        <div class="card-title" id="t-f-title">What Do You Get?</div>
+        <div class="card-desc" id="t-f-desc">Online shop, QR code, Anti-fraud security &amp; more.</div>
+      </div>
+      <div class="card-arrow" id="arrow-features"><i class="fa-solid fa-chevron-down"></i></div>
+    </div>
+  </div>
+  <div class="panel" id="panel-features">
+    <div class="panel-inner">
+      <div style="display:flex;flex-direction:column;gap:14px;" id="features-list"></div>
+      <a href="https://forms.gle/xRaRH9p1XVCkvSVs6" target="_blank" rel="noopener"
+        style="display:flex;align-items:center;justify-content:center;gap:8px;margin-top:18px;padding:13px;background:var(--orange);border-radius:12px;text-decoration:none;color:#fff;font-size:14px;font-weight:700;transition:opacity 0.2s;"
+        onmouseover="this.style.opacity='0.88'" onmouseout="this.style.opacity='1'">
+        <i class="fa-solid fa-handshake"></i> <span id="t-feat-cta">Pre-Register — It's Free</span>
+      </a>
+    </div>
+  </div>
+
+  <!-- COMING SOON -->
+  <div class="sec-label fu d5" style="margin-top:8px;" id="lbl-soon">Coming Soon</div>
+  <div class="card fu d5" style="opacity:0.55;pointer-events:none;">
+    <div class="card-inner">
+      <div class="card-icon blue"><i class="fa-solid fa-chart-line"></i></div>
+      <div class="card-body">
+        <div class="card-title" id="t-dash-title">Merchant Dashboard <span class="cs-badge">After Launch</span></div>
+        <div class="card-desc" id="t-dash-desc">Manage orders, track earnings, see analytics.</div>
+      </div>
+      <div class="card-arrow"><i class="fa-solid fa-lock"></i></div>
+    </div>
+  </div>
+  <div class="card fu d6" style="opacity:0.55;pointer-events:none;margin-bottom:0;">
+    <div class="card-inner">
+      <div class="card-icon white"><i class="fa-solid fa-circle-question"></i></div>
+      <div class="card-body">
+        <div class="card-title" id="t-how-title">How to Register <span class="cs-badge">After Launch</span></div>
+        <div class="card-desc" id="t-how-desc">Step-by-step video guide for cafe onboarding.</div>
+      </div>
+      <div class="card-arrow"><i class="fa-solid fa-lock"></i></div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- SUPPORT -->
+  <div class="sec-label" id="lbl-support">Have a Question?</div>
+  <a href="https://wa.me/919999999999?text=Hi%20BazaarIQ!%20I%20scanned%20your%20flyer%20and%20want%20to%20know%20more." target="_blank" rel="noopener" class="support-row">
+    <div class="sup-icon" style="background:rgba(37,211,102,0.12);color:#25D366;"><i class="fa-brands fa-whatsapp"></i></div>
+    <div>
+      <div class="sup-title" id="t-wa-title">WhatsApp Us</div>
+      <div class="sup-desc" id="t-wa-desc">Usually replies in under 15 min</div>
+    </div>
+    <div class="sup-arrow"><i class="fa-solid fa-arrow-right"></i></div>
+  </a>
+  <a href="tel:+919999999999" class="support-row">
+    <div class="sup-icon" style="background:rgba(255,255,255,0.06);color:var(--text);"><i class="fa-solid fa-phone"></i></div>
+    <div>
+      <div class="sup-title" id="t-call-title">Call Us</div>
+      <div class="sup-desc" id="t-call-desc">Mon–Sat, 10 AM – 7 PM</div>
+    </div>
+    <div class="sup-arrow"><i class="fa-solid fa-arrow-right"></i></div>
+  </a>
+
+  <!-- FOOTER -->
+  <div class="footer">
+    <div class="footer-logo">Bazaar<span>IQ</span></div>
+    <div class="footer-links">
+      <a href="#" class="footer-link">Privacy</a>
+      <span style="color:var(--border);">·</span>
+      <a href="https://www.bazaariq.in" target="_blank" class="footer-link">www.bazaariq.in</a>
+      <span style="color:var(--border);">·</span>
+      <a href="#" class="footer-link">Terms</a>
+    </div>
+    <div class="footer-text" id="t-footer">© 2025 BazaarIQ Technologies · Digital Power for Local Businesses</div>
+  </div>
+
+</div>
+</div>
+
+<script>
+const T={
+  en:{
+    hdrSub:'CYBER CAFE PARTNER PORTAL',live:'LIVE',label:'EN',
+    scanned:'You scanned our flyer',
+    h1:'India\'s First<br/>Digital Marketplace<br/>for <span>Cyber Cafes</span>',
+    hp:'Get your own online storefront. Take orders for PAN, Aadhaar, Certificates & more — all digitally.',
+    lblJoin:'Join the Pilot',free:'FREE',
+    regT:'Pre-Register as Pilot Partner',regD:'Takes 2 minutes. We\'ll contact you on launch day.',
+    lblLearn:'Learn More',
+    vT:'What is BazaarIQ?',vBadge:'Video Coming',
+    vD:'Watch a short intro about the platform & what you get.',
+    vidLbl:'BazaarIQ Platform Intro — 2 min',
+    vBody:'BazaarIQ is India\'s first digital services marketplace built for cyber cafe owners. Get your own storefront at <strong style="color:var(--text);">bazaariq.in/YourCafeName</strong>, accept orders online, track earnings, and grow beyond walk-ins.',
+    fT:'What Do You Get?',fD:'Online shop, QR code, Anti-fraud security & more.',
+    feats:[
+      {ic:'fa-store',bg:'var(--orange-dim)',cl:'var(--orange)',t:'Your Online Shop',d:'Clean URL like <b style="color:var(--text);font-weight:600;">bazaariq.in/YourCafeName</b> to share on WhatsApp & social media.'},
+      {ic:'fa-qrcode',bg:'rgba(96,165,250,0.1)',cl:'#60A5FA',t:'Customer QR Code',d:'Customers find you via Smart Search. Get a QR code for your shop to drive online orders.'},
+      {ic:'fa-shield-halved',bg:'var(--green-dim)',cl:'var(--green)',t:'Anti-Fraud Security',d:'Our Reverse 2FA stops OTP scams. YOU verify first — scammers can\'t steal from your customers.'},
+      {ic:'fa-indian-rupee-sign',bg:'rgba(251,191,36,0.1)',cl:'#FBBF24',t:'Zero Setup Cost',d:'No fees during the pilot. Be among the first cafes. Grow beyond walk-ins.'},
+    ],
+    featCta:'Pre-Register — It\'s Free',
+    lblSoon:'Coming Soon',
+    dashT:'Merchant Dashboard',dashD:'Manage orders, track earnings, see analytics.',
+    howT:'How to Register',howD:'Step-by-step video guide for cafe onboarding.',
+    lblSup:'Have a Question?',
+    waT:'WhatsApp Us',waD:'Usually replies in under 15 min',
+    callT:'Call Us',callD:'Mon–Sat, 10 AM – 7 PM',
+    footer:'© 2025 BazaarIQ Technologies · Digital Power for Local Businesses',deva:false
+  },
+  hi:{
+    hdrSub:'साइबर कैफे पार्टनर पोर्टल',live:'लाइव',label:'HI',
+    scanned:'आपने हमारा फ्लायर स्कैन किया',
+    h1:'साइबर कैफे के लिए<br/>भारत का पहला<br/><span>डिजिटल मार्केटप्लेस</span>',
+    hp:'अपनी ऑनलाइन दुकान पाएं। PAN, आधार, सर्टिफिकेट और बहुत कुछ के लिए ऑर्डर लें — सब डिजिटल।',
+    lblJoin:'पायलट में जुड़ें',free:'मुफ्त',
+    regT:'पायलट पार्टनर के रूप में पहले से रजिस्टर करें',regD:'2 मिनट लगते हैं। लॉन्च के दिन हम आपसे संपर्क करेंगे।',
+    lblLearn:'और जानें',
+    vT:'BazaarIQ क्या है?',vBadge:'वीडियो जल्द आएगा',
+    vD:'प्लेटफॉर्म और आपको मिलने वाली सुविधाओं का एक छोटा इंट्रो देखें।',
+    vidLbl:'BazaarIQ प्लेटफॉर्म इंट्रो — 2 मिनट',
+    vBody:'BazaarIQ साइबर कैफे मालिकों के लिए भारत का पहला डिजिटल मार्केटप्लेस है। <strong style="color:var(--text);">bazaariq.in/YourCafeName</strong> पर अपनी दुकान पाएं, ऑनलाइन ऑर्डर लें और वॉक-इन से आगे बढ़ें।',
+    fT:'आपको क्या मिलेगा?',fD:'ऑनलाइन शॉप, QR कोड, एंटी-फ्रॉड सिक्योरिटी और बहुत कुछ।',
+    feats:[
+      {ic:'fa-store',bg:'var(--orange-dim)',cl:'var(--orange)',t:'आपकी ऑनलाइन दुकान',d:'<b style="color:var(--text);font-weight:600;">bazaariq.in/YourCafeName</b> जैसा क्लीन URL — WhatsApp और सोशल मीडिया पर शेयर करें।'},
+      {ic:'fa-qrcode',bg:'rgba(96,165,250,0.1)',cl:'#60A5FA',t:'कस्टमर QR कोड',d:'स्मार्ट सर्च से ग्राहक आपको ढूंढें। ऑनलाइन ऑर्डर के लिए अपने शॉप का QR कोड पाएं।'},
+      {ic:'fa-shield-halved',bg:'var(--green-dim)',cl:'var(--green)',t:'एंटी-फ्रॉड सिक्योरिटी',d:'हमारा Reverse 2FA OTP स्कैम रोकता है। आप पहले खुद वेरिफाई करें — स्कैमर्स कुछ नहीं कर सकते।'},
+      {ic:'fa-indian-rupee-sign',bg:'rgba(251,191,36,0.1)',cl:'#FBBF24',t:'शून्य सेटअप लागत',d:'पायलट के दौरान कोई फीस नहीं। पहले कैफे में शामिल हों। वॉक-इन से आगे पहुंचें।'},
+    ],
+    featCta:'पहले से रजिस्टर करें — मुफ्त है',
+    lblSoon:'जल्द आएगा',
+    dashT:'मर्चेंट डैशबोर्ड',dashD:'ऑर्डर मैनेज करें, कमाई ट्रैक करें, एनालिटिक्स देखें।',
+    howT:'रजिस्टर कैसे करें',howD:'कैफे ऑनबोर्डिंग के लिए स्टेप-बाय-स्टेप वीडियो गाइड।',
+    lblSup:'कोई सवाल है?',
+    waT:'WhatsApp करें',waD:'आमतौर पर 15 मिनट में जवाब',
+    callT:'कॉल करें',callD:'सोम–शनि, सुबह 10 – शाम 7',
+    footer:'© 2025 BazaarIQ Technologies · स्थानीय व्यवसायों के लिए डिजिटल शक्ति',deva:true
+  },
+  mr:{
+    hdrSub:'सायबर कॅफे पार्टनर पोर्टल',live:'लाईव्ह',label:'MR',
+    scanned:'तुम्ही आमचा फ्लायर स्कॅन केला',
+    h1:'सायबर कॅफेसाठी<br/>भारतातील पहिला<br/><span>डिजिटल मार्केटप्लेस</span>',
+    hp:'तुमचे स्वतःचे ऑनलाइन स्टोअर मिळवा. PAN, आधार, प्रमाणपत्रे आणि बरेच काही — सर्व डिजिटल पद्धतीने.',
+    lblJoin:'पायलटमध्ये सामील व्हा',free:'मोफत',
+    regT:'पायलट पार्टनर म्हणून आधीच नोंदणी करा',regD:'2 मिनिटे लागतात. लॉन्चच्या दिवशी आम्ही तुमच्याशी संपर्क करू.',
+    lblLearn:'अधिक जाणून घ्या',
+    vT:'BazaarIQ काय आहे?',vBadge:'व्हिडिओ लवकरच येणार',
+    vD:'प्लॅटफॉर्म आणि तुम्हाला मिळणाऱ्या सुविधांबद्दल एक छोटी ओळख पहा.',
+    vidLbl:'BazaarIQ प्लॅटफॉर्म ओळख — 2 मिनिटे',
+    vBody:'BazaarIQ सायबर कॅफे मालकांसाठी भारतातील पहिला डिजिटल मार्केटप्लेस आहे. <strong style="color:var(--text);">bazaariq.in/YourCafeName</strong> वर तुमचे स्टोअर मिळवा, ऑनलाइन ऑर्डर स्वीकारा आणि वॉक-इनच्या पलीकडे वाढा.',
+    fT:'तुम्हाला काय मिळते?',fD:'ऑनलाइन शॉप, QR कोड, अँटी-फ्रॉड सिक्युरिटी आणि बरेच काही.',
+    feats:[
+      {ic:'fa-store',bg:'var(--orange-dim)',cl:'var(--orange)',t:'तुमचे ऑनलाइन दुकान',d:'<b style="color:var(--text);font-weight:600;">bazaariq.in/YourCafeName</b> सारखा स्वच्छ URL — WhatsApp व सोशल मीडियावर शेअर करा.'},
+      {ic:'fa-qrcode',bg:'rgba(96,165,250,0.1)',cl:'#60A5FA',t:'कस्टमर QR कोड',d:'स्मार्ट सर्चद्वारे ग्राहक तुम्हाला शोधतात. ऑनलाइन ऑर्डरसाठी दुकानाचा QR कोड मिळवा.'},
+      {ic:'fa-shield-halved',bg:'var(--green-dim)',cl:'var(--green)',t:'अँटी-फ्रॉड सिक्युरिटी',d:'आमचे Reverse 2FA OTP स्कॅम थांबवते. तुम्ही आधी स्वतः व्हेरिफाय करा — स्कॅमर्स काहीच करू शकत नाहीत.'},
+      {ic:'fa-indian-rupee-sign',bg:'rgba(251,191,36,0.1)',cl:'#FBBF24',t:'शून्य सेटअप खर्च',d:'पायलट दरम्यान कोणतेही शुल्क नाही. पहिल्या कॅफेमध्ये सामील व्हा. वॉक-इनच्या पलीकडे पोहोचा.'},
+    ],
+    featCta:'आधीच नोंदणी करा — मोफत आहे',
+    lblSoon:'लवकरच येणार',
+    dashT:'मर्चंट डॅशबोर्ड',dashD:'ऑर्डर व्यवस्थापित करा, कमाई ट्रॅक करा, विश्लेषण पहा.',
+    howT:'नोंदणी कशी करावी',howD:'कॅफे ऑनबोर्डिंगसाठी स्टेप-बाय-स्टेप व्हिडिओ मार्गदर्शन.',
+    lblSup:'काही प्रश्न आहे का?',
+    waT:'WhatsApp करा',waD:'साधारणतः 15 मिनिटांत उत्तर',
+    callT:'फोन करा',callD:'सोम–शनि, सकाळी 10 – सायंकाळी 7',
+    footer:'© 2025 BazaarIQ Technologies · स्थानिक व्यवसायांसाठी डिजिटल शक्ती',deva:true
+  }
+};
+
+function set(id,val,deva){
+  const el=document.getElementById(id);
+  if(!el)return;
+  el.innerHTML=val;
+  if(deva)el.classList.add('deva'); else el.classList.remove('deva');
+}
+function setText(id,val,deva){
+  const el=document.getElementById(id);
+  if(!el)return;
+  el.textContent=val;
+  if(deva)el.classList.add('deva'); else el.classList.remove('deva');
+}
+
+function renderFeatures(t){
+  document.getElementById('features-list').innerHTML=t.feats.map(f=>`
+    <div style="display:flex;gap:13px;align-items:flex-start;">
+      <div style="width:36px;height:36px;border-radius:10px;background:${f.bg};color:${f.cl};display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;"><i class="fa-solid ${f.ic}"></i></div>
+      <div>
+        <div style="font-size:13px;font-weight:700;margin-bottom:3px;${t.deva?'font-family:var(--font-deva);':''}">${f.t}</div>
+        <div style="font-size:12px;color:var(--muted);line-height:1.6;${t.deva?'font-family:var(--font-deva);':''}">${f.d}</div>
+      </div>
+    </div>`).join('');
+}
+
+function applyLang(lang){
+  const t=T[lang]; const d=t.deva;
+  document.getElementById('hdr-sub').textContent=t.hdrSub;
+  document.getElementById('live-txt').textContent=t.live;
+  document.getElementById('cur-lang-label').textContent=t.label;
+  document.getElementById('t-scanned').textContent=t.scanned;
+  const h1=document.getElementById('hero-h1');
+  h1.innerHTML=t.h1; h1.className=d?'deva':'';
+  const hp=document.getElementById('hero-p');
+  hp.textContent=t.hp; hp.className=d?'deva':'';
+  document.getElementById('lbl-join').textContent=t.lblJoin;
+  document.getElementById('t-free').textContent=t.free;
+  set('t-reg-title',t.regT,d); set('t-reg-desc',t.regD,d);
+  document.getElementById('lbl-learn').textContent=t.lblLearn;
+  document.getElementById('t-v-title').innerHTML=t.vT+' <span class="cs-badge"><i class="fa-solid fa-clock"></i> '+t.vBadge+'</span>';
+  if(d) document.getElementById('t-v-title').classList.add('deva');
+  set('t-v-desc',t.vD,d);
+  document.getElementById('t-vidlabel').textContent=t.vidLbl;
+  set('t-v-body',t.vBody,d);
+  set('t-f-title',t.fT,d); set('t-f-desc',t.fD,d);
+  renderFeatures(t);
+  document.getElementById('t-feat-cta').textContent=t.featCta;
+  document.getElementById('lbl-soon').textContent=t.lblSoon;
+  document.getElementById('t-dash-title').innerHTML=t.dashT+' <span class="cs-badge">After Launch</span>';
+  if(d) document.getElementById('t-dash-title').classList.add('deva');
+  set('t-dash-desc',t.dashD,d);
+  document.getElementById('t-how-title').innerHTML=t.howT+' <span class="cs-badge">After Launch</span>';
+  if(d) document.getElementById('t-how-title').classList.add('deva');
+  set('t-how-desc',t.howD,d);
+  document.getElementById('lbl-support').textContent=t.lblSup;
+  set('t-wa-title',t.waT,d); set('t-wa-desc',t.waD,d);
+  set('t-call-title',t.callT,d); set('t-call-desc',t.callD,d);
+  document.getElementById('t-footer').textContent=t.footer;
+}
+
+function setLang(lang){
+  applyLang(lang);
+  const sc=document.getElementById('lang-screen');
+  sc.classList.add('hide');
+  setTimeout(()=>{
+    sc.style.display='none';
+    document.getElementById('main-page').classList.add('visible');
+  },400);
+}
+
+function showLangScreen(){
+  document.getElementById('main-page').classList.remove('visible');
+  document.querySelectorAll('.panel.open').forEach(p=>p.classList.remove('open'));
+  const sc=document.getElementById('lang-screen');
+  sc.style.display='flex'; sc.classList.remove('hide');
+}
+
+function togglePanel(id){
+  const p=document.getElementById('panel-'+id);
+  const a=document.getElementById('arrow-'+id);
+  const open=p.classList.contains('open');
+  document.querySelectorAll('.panel.open').forEach(x=>{
+    x.classList.remove('open');
+    const ax=document.getElementById('arrow-'+x.id.replace('panel-',''));
+    if(ax)ax.querySelector('i').className='fa-solid fa-chevron-down';
+  });
+  if(!open){
+    p.classList.add('open');
+    if(a)a.querySelector('i').className='fa-solid fa-chevron-up';
+    setTimeout(()=>p.scrollIntoView({behavior:'smooth',block:'nearest'}),80);
+  }
+}
+
+function playVideo(){
+  document.getElementById('vbox').innerHTML='<iframe src="https://www.youtube.com/embed/YOUR_VIDEO_ID?autoplay=1" allow="autoplay;fullscreen" allowfullscreen></iframe>';
+}
+
+renderFeatures(T.en);
+</script>
+</body>
+</html>
